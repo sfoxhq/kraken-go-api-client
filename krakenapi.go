@@ -4,10 +4,12 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"crypto/sha512"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -66,7 +68,17 @@ func NewKrakenApi(key, secret string) *KrakenApi {
 
 // New creates a new Kraken API client
 func New(key, secret string) *KrakenApi {
-	client := &http.Client{}
+	dialContext := (&net.Dialer{
+		Timeout:   30 * time.Second,
+		KeepAlive: 5 * time.Minute,
+	}).DialContext
+	tr := http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
+		DialContext:     dialContext,
+	}
+	client := &http.Client{
+		Transport: &tr,
+	}
 
 	return &KrakenApi{key, secret, client}
 }

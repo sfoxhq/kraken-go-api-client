@@ -76,23 +76,7 @@ type AssetPairInfo struct {
 }
 
 // AssetsResponse includes asset informations
-type AssetsResponse struct {
-	KFEE AssetInfo
-	XETH AssetInfo
-	XLTC AssetInfo
-	XNMC AssetInfo
-	XXBT AssetInfo
-	XXDG AssetInfo
-	XXLM AssetInfo
-	XXRP AssetInfo
-	XXVN AssetInfo
-	ZCAD AssetInfo
-	ZEUR AssetInfo
-	ZGBP AssetInfo
-	ZJPY AssetInfo
-	ZKRW AssetInfo
-	ZUSD AssetInfo
-}
+type AssetsResponse map[string]AssetInfo
 
 // AssetInfo represents an asset information
 type AssetInfo struct {

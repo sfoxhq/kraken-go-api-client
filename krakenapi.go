@@ -94,13 +94,14 @@ func (api *KrakenApi) Time() (*TimeResponse, error) {
 	return resp.(*TimeResponse), nil
 }
 
-func (api *KrakenApi) Balance() (*Balance, error) {
-	resp, err := api.queryPublic("BalanceEx", nil, &Balance{})
+func (api *KrakenApi) Balance() (map[string]Balance, error) {
+	ret := make(map[string]Balance)
+	resp, err := api.queryPublic("BalanceEx", nil, &ret)
 	if err != nil {
 		return nil, err
 	}
 
-	return resp.(*Balance), nil
+	return resp.(map[string]Balance), nil
 }
 
 // Assets returns the servers available assets

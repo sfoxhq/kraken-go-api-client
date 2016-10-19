@@ -96,7 +96,7 @@ func (api *KrakenApi) Time() (*TimeResponse, error) {
 
 func (api *KrakenApi) Balance() (map[string]Balance, error) {
 	ret := make(map[string]Balance)
-	resp, err := api.queryPublic("BalanceEx", nil, &ret)
+	resp, err := api.queryPrivate("BalanceEx", nil, &ret)
 	if err != nil {
 		return nil, err
 	}

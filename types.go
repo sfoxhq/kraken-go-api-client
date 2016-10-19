@@ -134,3 +134,8 @@ type PairTickerInfo struct {
 	// Today's opening price
 	OpeningPrice float32 `json:"o,string"`
 }
+
+type Balance struct {
+	Balance float64 `json:"balance,string,omitempty"`
+	Held    float64 `json:"hold_trade,string,omitempty"`
+}

@@ -39,6 +39,7 @@ var publicMethods = []string{
 // List of valid private methods
 var privateMethods = []string{
 	"Balance",
+	"BalanceEx",
 	"TradeBalance",
 	"OpenOrders",
 	"ClosedOrders",
@@ -91,6 +92,15 @@ func (api *KrakenApi) Time() (*TimeResponse, error) {
 	}
 
 	return resp.(*TimeResponse), nil
+}
+
+func (api *KrakenApi) Balance() (*Balance, error) {
+	resp, err := api.queryPublic("BalanceEx", nil, &Balance{})
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.(*Balance), nil
 }
 
 // Assets returns the servers available assets

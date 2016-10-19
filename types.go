@@ -37,27 +37,7 @@ type TimeResponse struct {
 }
 
 // AssetPairsResponse includes asset pair informations
-type AssetPairsResponse struct {
-	XETHXXBT AssetPairInfo
-	XETHZCAD AssetPairInfo
-	XETHZEUR AssetPairInfo
-	XETHZGBP AssetPairInfo
-	XETHZJPY AssetPairInfo
-	XETHZUSD AssetPairInfo
-	XLTCZCAD AssetPairInfo
-	XLTCZEUR AssetPairInfo
-	XLTCZUSD AssetPairInfo
-	XXBTXLTC AssetPairInfo
-	XXBTXNMC AssetPairInfo
-	XXBTXXDG AssetPairInfo
-	XXBTXXLM AssetPairInfo
-	XXBTXXRP AssetPairInfo
-	XXBTZCAD AssetPairInfo
-	XXBTZEUR AssetPairInfo
-	XXBTZGBP AssetPairInfo
-	XXBTZJPY AssetPairInfo
-	XXBTZUSD AssetPairInfo
-}
+type AssetPairsResponse map[string]AssetPairInfo
 
 // AssetPairInfo represents asset pair information
 type AssetPairInfo struct {

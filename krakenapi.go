@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"sync/atomic"
 	"time"
 )
 
@@ -59,6 +60,7 @@ type KrakenApi struct {
 	key    string
 	secret string
 	client *http.Client
+	nonce  uint64
 }
 
 // NewKrakenApi creates a new Kraken API Client
@@ -80,8 +82,7 @@ func New(key, secret string) *KrakenApi {
 	client := &http.Client{
 		Transport: &tr,
 	}
-
-	return &KrakenApi{key, secret, client}
+	return &KrakenApi{key, secret, client, uint64(time.Now().UnixNano())}
 }
 
 // Time returns the server's time
@@ -166,7 +167,7 @@ func (api *KrakenApi) queryPrivate(method string, values url.Values, typ interfa
 	urlPath := fmt.Sprintf("/%s/private/%s", APIVersion, method)
 	reqURL := fmt.Sprintf("%s%s", APIURL, urlPath)
 	secret, _ := base64.StdEncoding.DecodeString(api.secret)
-	values.Set("nonce", fmt.Sprintf("%d", time.Now().UnixNano()))
+	values.Set("nonce", fmt.Sprintf("%d", atomic.AddUint64(&api.nonce, 1)))
 
 	// Create signature
 	signature := createSignature(urlPath, values, secret)
